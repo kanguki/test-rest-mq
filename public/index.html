@@ -4,10 +4,16 @@
     <meta charset="UTF-8" />
     <title>test-rest-kafka</title>
     <style>
-      textarea {
+      textarea#input {
         width: 300px;
         height: 150px;
         border: #b2d76c solid 3px;
+      }
+      textarea#responseHolder {
+        width: 1200px;
+        height: 150px;
+        border: #e2205a solid 3px;
+        font-size: 20px;
       }
       button {
         border: #d76ccc solid 3px;
@@ -23,8 +29,8 @@
   <body>
     <h3>UKIE CUSTOM TEST</h3>
     <select name="topic_to_send" id="topic_to_send">
-      <option value="mas-rest-bridge">mas-rest-bridge</option>
-      <option value="kbfinance" selected>kbfinance</option>
+      <option value="mas-rest-bridge">https://maswts.fake_address.net</option>
+      <option value="kbfinance" selected>https://kbfina.fake_address.org</option>
     </select>
     <br /><br />
     <input type="text" id="uri" name="uri" placeholder="URI" autofocus value="post:/api/v1/sendOtp" />
@@ -34,6 +40,8 @@
     </textarea>
     <br /><br />
     <button id="go">Go</button>
+    <br /><br />
+    <textarea id="responseHolder"></textarea>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
@@ -43,6 +51,7 @@
   </body>
   <script>
     const domain = 'http://localhost:3000/';
+    const responseHolder = document.getElementById('responseHolder');
     const goBtn = document.getElementById('go');
     goBtn.addEventListener('click', go);
     function go() {
@@ -57,7 +66,10 @@
         uri: url,
         msg: input,
       };
-      axios.post(domain, requestBody).then((res) => console.log(res.data.data));
+      axios.post(domain, requestBody).then((res) => {
+        console.log(res.data.data);
+        responseHolder.innerHTML = formatResponse(JSON.stringify(res.data.data.data));
+      });
       document.getElementById('uri').select();
     }
 
@@ -65,6 +77,10 @@
     function extractUriAndMethod(uriMethodString) {
       const uriMethodPair = uriMethodString.split(':');
       return uriMethodPair[1] ? [uriMethodPair[0].trim(), uriMethodPair[1].trim()] : ['', uriMethodString.trim()];
+    }
+
+    function formatResponse(responseStr) {
+      return responseStr.replace(/{/g, '{\n').replace(/}/g, '\n}').replace(/","/g, '",\n"');
     }
   </script>
 </html>
