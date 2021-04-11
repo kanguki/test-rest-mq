@@ -1,13 +1,13 @@
 {
   "name": "node-rdkafka_socket_node",
   "version": "1.0.0",
-  "description": "node-rdkafka + socket-io + typescript",
+  "description": "node-rdkafka + rest + typescript",
   "main": "index.js",
   "scripts": {
     "x": "npm run compile && node build/src/index.js",
     "luon": "node build/src/index.js",
     "makeup": "gts fix && gts check && npm run posttest ",
-    "cuoi": "npm run makeup && npm run x",
+    "final": "npm run makeup && npm run x",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",

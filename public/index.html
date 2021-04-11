@@ -51,7 +51,7 @@
       const input = document.getElementById('input').value.trim();
 
       const [method, url] = extractUriAndMethod(uri);
-      console.log(method, uri);
+      console.log(method, url);
       const requestBody = {
         topic: topic,
         uri: url,
@@ -64,9 +64,7 @@
     //uriMethodString has this format:    method:uri     ,eg: get:/api/abcdefgh
     function extractUriAndMethod(uriMethodString) {
       const uriMethodPair = uriMethodString.split(':');
-      return uriMethodPair.length === 2
-        ? [uriMethodPair[0].trim(), uriMethodPair[1].trim()]
-        : ['', uriMethodString.trim()];
+      return uriMethodPair[1] ? [uriMethodPair[0].trim(), uriMethodPair[1].trim()] : ['', uriMethodString.trim()];
     }
   </script>
 </html>
