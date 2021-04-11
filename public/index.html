@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>test-rest-kafka</title>
+    <style>
+      textarea {
+        width: 300px;
+        height: 150px;
+        border: #b2d76c solid 3px;
+      }
+      button {
+        border: #d76ccc solid 3px;
+      }
+      select {
+        border: #669dff solid 3px;
+      }
+      input {
+        border: #ff7d7d solid 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>UKIE CUSTOM TEST</h3>
+    <select name="topic_to_send" id="topic_to_send">
+      <option value="mas-rest-bridge">mas-rest-bridge</option>
+      <option value="kbfinance" selected>kbfinance</option>
+    </select>
+    <br /><br />
+    <input type="text" id="uri" name="uri" placeholder="URI" autofocus value="post:/api/v1/sendOtp" />
+    <br /><br />
+    <textarea id="input" placeholder="Put param object or body request in here">
+    {"id":"0946993708","idType":"PHONE_NO","txType":"REGISTER"}
+    </textarea>
+    <br /><br />
+    <button id="go">Go</button>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  <script>
+    const domain = 'http://localhost:3000/';
+    const goBtn = document.getElementById('go');
+    goBtn.addEventListener('click', go);
+    function go() {
+      const topic = document.getElementById('topic_to_send').value;
+      const uri = document.getElementById('uri').value;
+      const input = document.getElementById('input').value.trim();
+
+      const [method, url] = extractUriAndMethod(uri);
+      console.log(method, uri);
+      const requestBody = {
+        topic: topic,
+        uri: url,
+        msg: input,
+      };
+      axios.post(domain, requestBody).then((res) => console.log(res.data.data));
+      document.getElementById('uri').select();
+    }
+
+    //uriMethodString has this format:    method:uri     ,eg: get:/api/abcdefgh
+    function extractUriAndMethod(uriMethodString) {
+      const uriMethodPair = uriMethodString.split(':');
+      return uriMethodPair.length === 2
+        ? [uriMethodPair[0].trim(), uriMethodPair[1].trim()]
+        : ['', uriMethodString.trim()];
+    }
+  </script>
+</html>
