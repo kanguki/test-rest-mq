@@ -1,7 +1,5 @@
 # rest - kafka
 
-By default it listens on port 3000
-
 This service takes data (uri, data) from client, formats it as:
 {"messageType":"xxx","messageId":"${msgId}","responseDestination":{"topic":"OUT_TOPIC","uri":"xxx"},"uri":"${uri}","data":${data}} //msgId is unique so as to map correct response of particular request
 
