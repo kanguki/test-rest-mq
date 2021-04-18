@@ -9,15 +9,11 @@ export class GeneralController {
 
   processRequest = (req: Request, res: Response) => {
     const msgId = this.forwardRequest(req);
-    this.waitForResponseAndSend(msgId, res);
+    this.generalProcessingService.mapIdToResponse(msgId, res);
   };
 
   forwardRequest(req: Request) {
     const {topic, uri, msg} = req.body;
     return this.generalProcessingService.sendRequest(uri, msg, topic);
-  }
-
-  waitForResponseAndSend(msgId: string, res: Response) {
-    this.generalProcessingService.waitForResponseAndSend(msgId, res);
   }
 }

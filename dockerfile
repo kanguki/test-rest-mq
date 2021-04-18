@@ -1,11 +1,11 @@
 FROM node:14.16.0
 
-MAINTAINER mo
+LABEL author="mo"
 
 LABEL version="1.0"
 
 #Env
-ENV PORT=23810
+ENV PORT=3003
 ENV kafkaProducerId=rest-kafka-pang
 ENV kafkaProducerBrokerList=localhost:9092
 ENV kafkaConsumerBrokerList=localhost:9092
@@ -26,4 +26,4 @@ RUN npm run compile
 
 #start
 CMD ["npm", "start"]
-EXPOSE 23810
+EXPOSE 3003

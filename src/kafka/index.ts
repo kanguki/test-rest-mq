@@ -42,7 +42,7 @@ export function sendKafka(msgToSend: string, topic: string): void {
   });
 }
 
-export function changeConsumerEventListener(listener: (data: Message) => void) {
+export function manipulateConsumerEventListener(listener: (data: Message) => void) {
   defaultConsumerListener = listener;
 }
 
